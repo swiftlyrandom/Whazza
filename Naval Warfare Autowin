@@ -17,3 +17,21 @@ local function dpt()
   end
 end
 
+local function spawn()
+  local args = {
+      [1] = "VSpawn",
+      [2] = {
+          [1] = workspace:WaitForChild("JapanDock"):WaitForChild("VehicleSP"):WaitForChild("Airport"),
+          [2] = "Large Bomber",
+          [3] = 5
+      }
+  }
+
+game:GetService("ReplicatedStorage"):WaitForChild("Event"):FireServer(unpack(args)) 
+
+end
+
+
+
+
+dpt()
