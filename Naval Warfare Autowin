@@ -3,35 +3,49 @@ local players = game:GetService("Players")
 local player = players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local rootPart = character:WaitForChild("HumanoidRootPart")
+
 local ft 
 local et
 
 -- functions 
 local function dpt()
-  if player.Team.Name == "USA" then
-    ft = "USA"
-    et = "Japan"
-  else
-    ft = "Japan"
-    et = "USA"
-  end
+    if player.Team.Name == "USA" then
+        ft = "USA"
+        et = "Japan"
+    else
+        ft = "Japan"
+        et = "USA"
+    end
 end
 
 local function spawn()
-  local args = {
-      [1] = "VSpawn",
-      [2] = {
-          [1] = workspace:WaitForChild("JapanDock"):WaitForChild("VehicleSP"):WaitForChild("Airport"),
-          [2] = "Large Bomber",
-          [3] = 5
-      }
-  }
-
-game:GetService("ReplicatedStorage"):WaitForChild("Event"):FireServer(unpack(args)) 
-
+    local args = {
+        [1] = "VSpawn",
+        [2] = {
+            [1] = workspace:WaitForChild("JapanDock"):WaitForChild("VehicleSP"):WaitForChild("Center"),
+            [2] = "Submarine",
+            [3] = 5
+        }
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Event"):FireServer(unpack(args)) 
 end
 
+-- main function
+local function real()
+    spawn()
+    for _, instance in ipairs(workspace:GetDescendants()) do
+        if instance:IsA("Model") and instance.Name == "Submarine" then
+            local OwnerValue = instance:FindFirstChild("Owner")
+            if OwnerValue and OwnerValue.Value == player.Name then
+                local seat = instance:FindFirstChild("Seat")
+                if seat then
+                    rootPart.CFrame = seat.CFrame + Vector3.new(0, 2, 0)
+                end
+            end
+        end
+    end
+end
 
-
-
+-- run it
 dpt()
+real()
