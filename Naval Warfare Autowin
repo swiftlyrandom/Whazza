@@ -1,1 +1,19 @@
-yayyy
+-- variables
+local players = game:GetService("Players")
+local player = players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local rootPart = character:WaitForChild("HumanoidRootPart")
+local ft 
+local et
+
+-- functions 
+local function dpt()
+  if player.Team.Name == "USA" then
+    ft = "USA"
+    et = "Japan"
+  else
+    ft = "Japan"
+    et = "USA"
+  end
+end
+
